@@ -31,11 +31,11 @@ public class MyPageTest {
     @BeforeClass
     public static void setUpClass() {
         System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");
-//        ChromeOptions op = new ChromeOptions();
-//        op.setHeadless(true);
-//        op.addArguments("window-size=1920,1080");
-//        driver = new ChromeDriver(op);
-        driver = new ChromeDriver();
+        //driver = new ChromeDriver();
+        ChromeOptions op = new ChromeOptions();
+        op.setHeadless(true);
+        op.addArguments("window-size=1920,1080");
+        driver = new ChromeDriver(op);
     }
 
     @AfterClass
