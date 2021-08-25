@@ -8,6 +8,7 @@ package test.com.talbots;
 import com.ms.datadriven.SignInService;
 import com.ms.datadriven.vo.SignInVO;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,6 +48,8 @@ public class SignInOutTest {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         driver = new ChromeDriver(options);
+        // implicit wait condition
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @AfterClass
