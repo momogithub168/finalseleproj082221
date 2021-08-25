@@ -7,6 +7,7 @@ package test.com.signin;
  */
 
 import com.ms.finalseleproj.SignInMessages;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,12 +52,10 @@ public class SignInPage  {
             throws Exception {
         try {
             driver.get(url);
+            userName.clear();
             userName.sendKeys(uName);
-           // Thread.sleep(1000);
-            password.sendKeys(pWord);
-            Thread.sleep(2000);
+            password.sendKeys(pWord  + Keys.ENTER);
             submitBtn.click();
-            Thread.sleep(2000);
             //SignInPage login = new SignInPage(driver);
 
         } catch (Exception ex) {
@@ -94,6 +93,11 @@ public class SignInPage  {
     }
     
     public boolean IsNotMatchMsgAppear() {
-        return false; 
+        return Boolean.FALSE; 
     }
+    
+    public boolean IsShowHideWorking() {
+        return Boolean.FALSE;
+    }
+
 }

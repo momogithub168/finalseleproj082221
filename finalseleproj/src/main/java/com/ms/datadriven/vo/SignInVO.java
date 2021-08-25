@@ -3,19 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.itexps.mavendatadriven.vo;
+package com.ms.datadriven.vo;
 
 /**
  *
  * @author Mo Wan
  */
 public class SignInVO {
+    private int id;
     private String username;
     private String password;
 
-    public SignInVO(String username, String password) {
+    public SignInVO(int id, String username, String password) {
+        this.id = id;
         this.username = username;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     
@@ -37,8 +47,7 @@ public class SignInVO {
 
     @Override
     public String toString() {
-        return "LoginVO{" + "username=" + username + ", password=" + password + '}';
+        return "SignInVO{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
     }
-    
     
 }
