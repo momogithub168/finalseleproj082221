@@ -5,9 +5,12 @@
  */
 package test.com.talbots;
 
-import com.ms.datadriven.SignInService;
-import com.ms.datadriven.vo.SignInVO;
+import com.talbots.datadriven.SignInService;
+import com.talbots.datadriven.vo.SignInVO;
+import com.talbots.operation.PropertyReader;
+import com.talbots.util.PropertyKeys;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,12 +18,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import test.com.signin.ShowHideSignInPage;
 import test.com.signin.SignInPage;
 import test.com.signin.SignOutPage;
@@ -41,10 +42,15 @@ public class SignInOutTest {
 
     @BeforeClass
     public static void setUpClass() {
-        baseUrl = "https://www.talbots.com/login?original=%2Faccount";
+        //load properties
+        PropertyReader propReader = new PropertyReader();
+        Properties prop = propReader.getObjectRepository(PropertyKeys.SIGN_IN_PROP_FILE);
+        //load data driven list for test cases
         infoList = SignInService.loadSignInDetails();
-
-        System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");
+        baseUrl = prop.getProperty(PropertyKeys.SIGN_IN_URL);
+        
+        System.setProperty(prop.getProperty(PropertyKeys.WEB_DRIVER), prop.getProperty(PropertyKeys.CHROME_DRIVER_EXE));
+        
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         driver = new ChromeDriver(options);
@@ -68,7 +74,6 @@ public class SignInOutTest {
     @Test
     public void executeSignInModule() throws Exception {
         SignInPage signInpage = PageFactory.initElements(driver, SignInPage.class);
-        List<SignInVO> signInList = SignInService.loadSignInDetails();
         SignInVO info = infoList.stream().filter(v -> v.getId() == 5).findFirst().get();
        //Thread.sleep(2000);
         signInpage.signIn(baseUrl, info.getUsername(), info.getPassword());
@@ -89,6 +94,9 @@ public class SignInOutTest {
         SignInPage signInPage = PageFactory.initElements(driver, ShowHideSignInPage.class);
         SignInVO info = infoList.stream().filter(v -> v.getId() == 6).findFirst().get();
         signInPage.signIn(baseUrl, info.getUsername(), info.getPassword());
+        //take image
+        //File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        //FileUtils.copyFile(scrFile, new File("./image.png"));
         Assert.assertTrue(signInPage.IsShowHideWorking());
     }
 }

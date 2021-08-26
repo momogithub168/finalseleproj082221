@@ -6,7 +6,7 @@ package test.com.signin;
  * and open the template in the editor.
  */
 
-import com.ms.finalseleproj.SignInMessages;
+import com.talbots.util.SignInMessages;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
