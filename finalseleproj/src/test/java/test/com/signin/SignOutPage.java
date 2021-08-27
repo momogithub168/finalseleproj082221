@@ -5,6 +5,8 @@
  */
 package test.com.signin;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,12 +29,12 @@ public class SignOutPage {
     public void logoutPage() throws Exception {
         try {
             signOutPage.click();
-// Logout logout = new Logout(driver);
+            // Logout logout = new Logout(driver);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            // ex.printStackTrace();
+            Logger.getLogger(SignOutPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
 

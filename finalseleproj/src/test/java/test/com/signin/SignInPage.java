@@ -7,6 +7,8 @@ package test.com.signin;
  */
 
 import com.talbots.util.SignInMessages;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,8 +61,15 @@ public class SignInPage  {
             //SignInPage login = new SignInPage(driver);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            Logger.getLogger(SignInPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void signIn() throws Exception {
+        driver.get("https://www.talbots.com/login?original=%2Faccount");
+        Thread.sleep(5000);
+        pWordReset.click();
     }
     
     public String getUserNameErrorMsg() {
@@ -100,4 +109,7 @@ public class SignInPage  {
         return Boolean.FALSE;
     }
 
+    public String resetPassword(String email, boolean isClick) {
+        return "reset pWord";
+    }
 }

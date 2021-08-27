@@ -55,7 +55,7 @@ public class SignInOutTest {
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         driver = new ChromeDriver(options);
         // implicit wait condition
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
     @AfterClass

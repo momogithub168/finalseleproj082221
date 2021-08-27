@@ -23,14 +23,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import test.com.signin.NotMatchSignInPage;
 import test.com.signin.PasswordErrorSignInPage;
-import test.com.signin.ShowHideSignInPage;
+import test.com.signin.ResetPasswordSignInPage;
 import test.com.signin.SignInPage;
 import test.com.signin.UseNameAndPasswordErrorSignInPage;
 import test.com.signin.UseNameErrorSignInPage;
@@ -39,7 +38,7 @@ import test.com.signin.UseNameErrorSignInPage;
  *
  * @author Mo Wan
  */
-//Running test cases in order of method names in ascending order
+//Running test cases in order of method names in default order
 @FixMethodOrder(MethodSorters.DEFAULT)
 public class SignInTest {
 
@@ -63,6 +62,7 @@ public class SignInTest {
         System.setProperty(prop.getProperty(PropertyKeys.WEB_DRIVER), prop.getProperty(PropertyKeys.CHROME_DRIVER_EXE));
    
         ChromeOptions options = new ChromeOptions();
+        //options.setHeadless(true);
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -103,9 +103,7 @@ public class SignInTest {
         Thread.sleep(2000);
         SignInVO info = infoList.stream().filter(v -> v.getId() == 1).findFirst().get();
         signInPage.signIn(baseUrl, info.getUsername(), info.getPassword());
-        //Thread.sleep(5000);
         Assert.assertTrue(signInPage.getUserNameErrorMsg().equals(SignInMessages.INVALID_EMAIL_MSG));
-        //Thread.sleep(2000);
     }
 
     @Test
@@ -113,21 +111,15 @@ public class SignInTest {
         signInPage = PageFactory.initElements(driver, PasswordErrorSignInPage.class);
         SignInVO info = infoList.stream().filter(v -> v.getId() == 2).findFirst().get();
         signInPage.signIn(baseUrl, info.getUsername(), info.getPassword());
-        //Thread.sleep(8000);
         Assert.assertTrue(signInPage.getPasswordErrorMsg().equals(SignInMessages.REQUIRE_FIELD_MSG));
         testRestElements(signInPage);
     }
 
     private void testRestElements(SignInPage page) throws Exception {
-        //Thread.sleep(2000);
         Assert.assertTrue(page.isValidH4Title());
-        //Thread.sleep(1000);
         Assert.assertTrue(page.isValidPText());
-        //Thread.sleep(2000);
         Assert.assertTrue(page.isValidSpanLabel());
-        //Thread.sleep(2000);
         Assert.assertTrue(page.isCheckBoxAppear());
-        //Thread.sleep(2000);
         Assert.assertTrue(page.isPWordResetAppear());
     }
 
@@ -135,24 +127,19 @@ public class SignInTest {
     public void executeUserNameandPasswordErrorModule() throws Exception {
         signInPage = PageFactory.initElements(driver, UseNameAndPasswordErrorSignInPage.class);
         SignInVO info = infoList.stream().filter(v -> v.getId() == 3).findFirst().get();
-        //Thread.sleep(2000);
         signInPage.signIn(baseUrl, info.getUsername(), info.getPassword());
-        //Thread.sleep(2000);
+
         Assert.assertTrue(signInPage.getUserNameErrorMsg().equals(SignInMessages.REQUIRE_FIELD_MSG));
-        //Thread.sleep(2000);
         Assert.assertTrue(signInPage.getPasswordErrorMsg().equals(SignInMessages.REQUIRE_FIELD_MSG));
-        //Thread.sleep(2000);
     }
 
     @Test
     public void executeNotMatchModule() throws Exception {
         signInPage = PageFactory.initElements(driver, NotMatchSignInPage.class);
         SignInVO info = infoList.stream().filter(v -> v.getId() == 4).findFirst().get();
-        //Thread.sleep(2000);
+        
         signInPage.signIn(baseUrl, info.getUsername(), info.getPassword());
-        //Thread.sleep(8000);
         Assert.assertTrue(signInPage.IsNotMatchMsgAppear());
-        //Thread.sleep(2000);
-    }
 
+    }
 }
